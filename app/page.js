@@ -2,7 +2,11 @@ import { sql } from "@vercel/postgres";
 import { Pokemons, Pokemon } from "./components";
 
 export default async function Home() {
-  const { rows } = await sql`SELECT * FROM pokemon ORDER BY RANDOM() LIMIT 12`;
+  const { rows } = await withTimeout(
+    sql`SELECT * FROM pokemon ORDER BY RANDOM() LIMIT 12`,
+    15000,
+    "Timeout of postgres query"
+  );
 
   return (
     <Pokemons>
@@ -11,6 +15,17 @@ export default async function Home() {
       ))}
     </Pokemons>
   );
+}
+
+function withTimeout(promise, timeoutMs, message) {
+  return new Promise(async (resolve, reject) => {
+    const timeout = setTimeout(() => {
+      reject(new Error(message || "Timeout"));
+    }, timeoutMs);
+    const ret = await promise;
+    clearTimeout(timeout);
+    resolve(ret);
+  });
 }
 
 export const runtime = "edge";
