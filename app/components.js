@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-export function Pokemons({ children }) {
+export function PokemonList({ children }) {
   return (
     <ul className="max-w-md flex flex-wrap justify-center gap-4 p-4 m-3">
       {children}
