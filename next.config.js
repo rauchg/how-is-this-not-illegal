@@ -1,15 +1,17 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   experimental: {
-    appDir: true,
+    ppr: true,
   },
   images: {
-    remotePatterns: [{
-      protocol: 'https',
-      hostname: 'raw.githubusercontent.com',
-      port: '',
-      pathname: '/PokeAPI/sprites/master/sprites/pokemon/**'
-    }]
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "raw.githubusercontent.com",
+        port: "",
+        pathname: "/PokeAPI/sprites/master/sprites/pokemon/**",
+      },
+    ],
   },
 };
 
