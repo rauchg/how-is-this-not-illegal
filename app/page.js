@@ -1,6 +1,6 @@
 import { sql } from "@vercel/postgres";
 import { PokemonList, Pokemon } from "./components";
-import { cookies } from "next/server";
+import { cookies } from "next/headers";
 
 export default async function Home() {
   cookies(); // force dynamic
