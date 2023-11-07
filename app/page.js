@@ -1,9 +1,9 @@
 import { sql } from "@vercel/postgres";
 import { PokemonList, Pokemon } from "./components";
-import { headers } from "../next.config";
+import { cookies } from "next/server";
 
 export default async function Home() {
-  headers(); // Force dynamic
+  cookies(); // force dynamic
   const { rows } = await sql`SELECT * FROM pokemon ORDER BY RANDOM() LIMIT 12`;
 
   return (
