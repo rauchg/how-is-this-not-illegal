@@ -1,7 +1,9 @@
 import { sql } from "@vercel/postgres";
 import { PokemonList, Pokemon } from "./components";
+import { unstable_noStore as dynamic } from "next/cache";
 
 export default async function Home() {
+  dynamic();
   const { rows } = await sql`SELECT * FROM pokemon ORDER BY RANDOM() LIMIT 12`;
 
   return (
@@ -12,6 +14,3 @@ export default async function Home() {
     </PokemonList>
   );
 }
-
-export const runtime = "edge";
-export const dynamic = "force-dynamic";
