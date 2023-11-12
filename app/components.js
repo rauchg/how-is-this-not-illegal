@@ -17,6 +17,7 @@ export function Pokemon({ id, name }) {
         alt={name}
         src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`}
         className="rendering-pixelated"
+        unoptimized
       />
       {name}
     </li>
