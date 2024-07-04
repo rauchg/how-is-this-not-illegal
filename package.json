@@ -18,10 +18,10 @@
     "autoprefixer": "10.4.14",
     "eslint": "8.39.0",
     "eslint-config-next": "13.3.4",
-    "next": "14.0.3-canary.1",
+    "next": "15.0.0-rc.0",
     "postcss": "8.4.23",
-    "react": "18.2.0",
-    "react-dom": "18.2.0",
+    "react": "19.0.0-rc-f994737d14-20240522",
+    "react-dom": "19.0.0-rc-f994737d14-20240522",
     "tailwindcss": "3.3.2",
     "typescript": "5.0.4"
   }
