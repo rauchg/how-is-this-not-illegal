@@ -16,6 +16,8 @@ export function Pokemon({ id, name }) {
         height={96}
         alt={name}
         src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`}
+        className="rendering-pixelated"
+        unoptimized
       />
       {name}
     </li>
