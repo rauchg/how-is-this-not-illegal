@@ -3,32 +3,32 @@ import { ImageResponse } from "next/og";
 import { readFileSync } from "fs";
 import { join } from "path";
 
-export const revalidate = 60;
+export const revalidate = 5;
 
 export default async function OGImage() {
   const rows = await sql`SELECT * FROM pokemon ORDER BY RANDOM() LIMIT 12`;
 
-  const inter500 = readFileSync(
-    join(
-      process.cwd(),
-      "node_modules",
-      "@fontsource",
-      "inter",
-      "files",
-      "inter-latin-500-normal.woff",
-    ),
-  );
-
-  const robotoMono400 = readFileSync(
-    join(
-      process.cwd(),
-      "node_modules",
-      "@fontsource",
-      "roboto-mono",
-      "files",
-      "roboto-mono-latin-400-normal.woff",
-    ),
-  );
+  // const inter500 = readFileSync(
+  //   join(
+  //     process.cwd(),
+  //     "node_modules",
+  //     "@fontsource",
+  //     "inter",
+  //     "files",
+  //     "inter-latin-500-normal.woff",
+  //   ),
+  // );
+  //
+  // const robotoMono400 = readFileSync(
+  //   join(
+  //     process.cwd(),
+  //     "node_modules",
+  //     "@fontsource",
+  //     "roboto-mono",
+  //     "files",
+  //     "roboto-mono-latin-400-normal.woff",
+  //   ),
+  // );
 
   return new ImageResponse(
     (
@@ -81,16 +81,19 @@ export default async function OGImage() {
     {
       width: 1200,
       height: 630,
-      fonts: [
-        {
-          name: "Inter 500",
-          data: inter500,
-        },
-        {
-          name: "Roboto Mono 400",
-          data: robotoMono400,
-        },
-      ],
+      headers: {
+        "cache-control": "public, max-age=0, must-revalidate",
+      },
+      // fonts: [
+      //   {
+      //     name: "Inter 500",
+      //     data: inter500,
+      //   },
+      //   {
+      //     name: "Roboto Mono 400",
+      //     data: robotoMono400,
+      //   },
+      // ],
     },
   );
 }
