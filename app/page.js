@@ -1,8 +1,8 @@
-import { sql } from "@vercel/postgres";
+import { sql } from "./db";
 import { PokemonList, Pokemon } from "./components";
 
 export default async function Home() {
-  const { rows } = await sql`SELECT * FROM pokemon ORDER BY RANDOM() LIMIT 12`;
+  const rows = await sql`SELECT * FROM pokemon ORDER BY RANDOM() LIMIT 12`;
 
   return (
     <PokemonList>

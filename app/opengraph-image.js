@@ -1,26 +1,34 @@
-import { sql } from "@vercel/postgres";
-import { ImageResponse } from "next/server";
-import Image from "next/image";
+import { sql } from "./db";
+import { ImageResponse } from "next/og";
+import { readFileSync } from "fs";
+import { join } from "path";
 
-export const runtime = "edge";
 export const revalidate = 60;
 
 export default async function OGImage() {
-  const { rows } = await sql`SELECT * FROM pokemon ORDER BY RANDOM() LIMIT 12`;
+  const rows = await sql`SELECT * FROM pokemon ORDER BY RANDOM() LIMIT 12`;
 
-  const inter500 = fetch(
-    new URL(
-      `../node_modules/@fontsource/inter/files/inter-latin-500-normal.woff`,
-      import.meta.url
-    )
-  ).then((res) => res.arrayBuffer());
+  const inter500 = readFileSync(
+    join(
+      process.cwd(),
+      "node_modules",
+      "@fontsource",
+      "inter",
+      "files",
+      "inter-latin-500-normal.woff",
+    ),
+  );
 
-  const robotoMono400 = fetch(
-    new URL(
-      `../node_modules/@fontsource/roboto-mono/files/roboto-mono-latin-400-normal.woff`,
-      import.meta.url
-    )
-  ).then((res) => res.arrayBuffer());
+  const robotoMono400 = readFileSync(
+    join(
+      process.cwd(),
+      "node_modules",
+      "@fontsource",
+      "roboto-mono",
+      "files",
+      "roboto-mono-latin-400-normal.woff",
+    ),
+  );
 
   return new ImageResponse(
     (
@@ -76,14 +84,14 @@ export default async function OGImage() {
       fonts: [
         {
           name: "Inter 500",
-          data: await inter500,
+          data: inter500,
         },
         {
           name: "Roboto Mono 400",
-          data: await robotoMono400,
+          data: robotoMono400,
         },
       ],
-    }
+    },
   );
 }
 
