@@ -1,12 +1,26 @@
 import { sql } from "@vercel/postgres";
-import { ImageResponse } from "next/server";
+import { ImageResponse } from "next/og";
 import Image from "next/image";
 
 export const runtime = "edge";
 export const revalidate = 60;
 
 export default async function OGImage() {
+  // Return a placeholder during build if no database connection
+  if (!process.env.POSTGRES_URL) {
+    const rows = Array.from({ length: 12 }, (_, i) => ({
+      id: i + 1,
+      name: `Pokemon ${i + 1}`,
+    }));
+
+    return generateOGImage(rows);
+  }
+
   const { rows } = await sql`SELECT * FROM pokemon ORDER BY RANDOM() LIMIT 12`;
+  return generateOGImage(rows);
+}
+
+async function generateOGImage(rows) {
 
   const inter500 = fetch(
     new URL(
